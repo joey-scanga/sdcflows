@@ -150,7 +150,7 @@ def init_topup_wf(
     pad_blip_slices = pe.Node(PadSlices(), name='pad_blip_slices')
     # Run 3dVolReg between runs: uses RobustAverage for consistency and to generate
     # debugging artifacts (typically, one wants to look at the average across uncorrected runs)
-    setwise_avg = pe.Node(RobustAverage(num_threads=omp_nthreads), name='setwise_avg')
+    setwise_avg = pe.Node(RobustAverage(num_threads=omp_nthreads, mc_method="FSL"), name='setwise_avg')
     # The core of the implementation
     # Feed the input images in LAS orientation, so FSL does not run funky reorientations
     to_las = pe.Node(ReorientImageAndMetadata(target_orientation='LAS'), name='to_las')
